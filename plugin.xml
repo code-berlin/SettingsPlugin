@@ -21,6 +21,6 @@
             </feature>
         </config-file>
  
-        <source-file src="src/android/Calendar.java" target-dir="src/com/codeb/cordova/plugins/settings" />      
+        <source-file src="src/android/settins.java" target-dir="src/com/codeb/cordova/plugins/settings" />      
      </platform>          
 </plugin>
