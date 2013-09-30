@@ -10,7 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 
-public class Setings extends CordovaPlugin {
+public class Settings extends CordovaPlugin {
     
 	public static final String ACTION_ADD_CALENDAR_ENTRY = "addCalendarEntry"; 
 	 
