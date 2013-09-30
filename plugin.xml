@@ -17,10 +17,10 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Settings">
-                <param name="android-package" value="com.codeb.cordova.plugins.settings"/>
-            </feature>
+				<param name="android-package" value="com.codeb.cordova.plugins.settings" />
+			</feature>
         </config-file>
  
-        <source-file src="src/android/settins.java" target-dir="src/com/codeb/cordova/plugins/settings" />      
+        <source-file src="src/android/settings.java" target-dir="src/com/codeb/cordova/plugins/settings" />      
      </platform>          
 </plugin>
