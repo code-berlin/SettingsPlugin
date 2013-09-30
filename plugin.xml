@@ -21,6 +21,6 @@
 			</feature>
         </config-file>
  
-        <source-file src="src/android/settings.java" target-dir="src/com/codeb/cordova/plugins/settings" />      
+        <source-file src="src/android/Settings.java" target-dir="src/com/codeb/cordova/plugins/settings" />      
      </platform>          
 </plugin>
