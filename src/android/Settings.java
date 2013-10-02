@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import android.net.wifi.WifiManager;
 import android.bluetooth.BluetoothAdapter;
-import android.provider.Settings;
 import android.os.Looper;
 import android.util.Log;
 
