@@ -44,7 +44,17 @@ public class Settings extends CordovaPlugin {
     private void setBluetooth(String action, CallbackContext callbackContext) {
         Log.d(LOG_TAG, "Execute setBluetooth");
 		if (action != null && action.length() > 0) {
-            callbackContext.success(action);
+           if (action.equals("activate") {
+				BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+				mBluetoothAdapter.disable();
+				callbackContext.success("enabled");
+		   } else if (action.equals("deactivate") {
+				BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+				mBluetoothAdapter.disable();
+				callbackContext.success("disabled");
+		   } else {
+				callbackContext.error("Expected true / false string argument.");
+		   }
         } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
