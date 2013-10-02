@@ -26,11 +26,11 @@ public class Settings extends CordovaPlugin {
 			JSONObject arg_object = args.getJSONObject(0);
 			if (action.equals("getBluetooth")) {
 				String message = arg_object.getString("action");
-				this.getBluetooth(message, callbackContext);
+				this.getBluetooth(callbackContext);
 				return true;
 			} else if (action.equals("setBluetooth")) {
 				String message = arg_object.getString("action");
-				this.getBluetooth(message, callbackContext);
+				this.setBluetooth(message, callbackContext);
 				return true;
 			}
 			return false;
