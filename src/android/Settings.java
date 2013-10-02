@@ -14,6 +14,8 @@ import android.util.Log;
  */
 public class Settings extends CordovaPlugin {
 
+	private static final String LOG_TAG = "Diagnostic";
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Log.d(LOG_TAG, "Executing Settings Plugin");
