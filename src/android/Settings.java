@@ -7,6 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.net.wifi.WifiManager;
+import android.bluetooth.BluetoothAdapter;
+import android.provider.Settings;
+import android.os.Looper;
 import android.util.Log;
 
 /**
@@ -24,6 +28,10 @@ public class Settings extends CordovaPlugin {
 				String message = arg_object.getString("action");
 				this.getBluetooth(message, callbackContext);
 				return true;
+			} else if (action.equals("setBluetooth")) {
+				String message = arg_object.getString("action");
+				this.getBluetooth(message, callbackContext);
+				return true;
 			}
 			return false;
 		} catch(Exception e) {
@@ -32,13 +40,22 @@ public class Settings extends CordovaPlugin {
 		}
     }
 
-    private void getBluetooth(String message, CallbackContext callbackContext) {
-        Log.d(LOG_TAG, "Excicute getBluetooth");
-		if (message != null && message.length() > 0) {
-            callbackContext.success(message);
+    private void setBluetooth(String action, CallbackContext callbackContext) {
+        Log.d(LOG_TAG, "Execute setBluetooth");
+		if (action != null && action.length() > 0) {
+            callbackContext.success(action);
         } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
     }
+	
+	private void getBluetooth(CallbackContext callbackContext) {
+		Looper.prepare();
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		boolean result = bluetoothAdapter.isEnabled();
+		Log.d(LOG_TAG, "Bluetooth enabled: " + result);
+		return result;
+	}
+	
 }
 
