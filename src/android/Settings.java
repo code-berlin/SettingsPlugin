@@ -30,8 +30,10 @@ public class Settings extends CordovaPlugin {
 				String message = arg_object.getString("action");
 				this.setBluetooth(message, callbackContext);
 				return true;
-			} else if (action.equals("getVolume") {
-				
+			} else if (action.equals("getVolume")) {
+				String message = arg_object.getString("action");
+				this.getVolume(callbackContext);
+				return true;
 			} else {
 				Log.d(LOG_TAG, "invalid action");
 				callbackContext.error("invalid action");
@@ -72,6 +74,7 @@ public class Settings extends CordovaPlugin {
 	
 	
 	private void getVolume(CallbackContext callbackContext) {
+		Log.d(LOG_TAG, "Execute getVolume");
 		AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		int currentVolume = audio.getStreamVolume(AudioManager.STREAM_RING);
 		Log.d(LOG_TAG, "Bluetooth enabled: " + currentVolume);
