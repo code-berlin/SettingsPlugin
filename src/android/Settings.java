@@ -19,8 +19,9 @@ public class Settings extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		try {
+			JSONObject arg_object = args.getJSONObject(0);
 			if (action.equals("getBluetooth")) {
-				String message = args.getString(0);
+				String message = arg_object.getString("action"));
 				this.getBluetooth(message, callbackContext);
 				return true;
 			}
@@ -32,7 +33,7 @@ public class Settings extends CordovaPlugin {
     }
 
     private void getBluetooth(String message, CallbackContext callbackContext) {
-        Log.d(LOG_TAG, "Exicute getBluetooth");
+        Log.d(LOG_TAG, "Excicute getBluetooth");
 		if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {
