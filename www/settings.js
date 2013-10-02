@@ -13,6 +13,13 @@ var settings = {
 			'Settings',
 			'setBluetooth',
 			params);
+	},
+	getVolume: function(successCallback, errorCallback, params) {
+		return cordova.exec(successCallback,
+			errorCallback,
+			'Settings',
+			'getVolume',
+			params);
 	}
 	
 }

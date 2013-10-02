@@ -30,6 +30,8 @@ public class Settings extends CordovaPlugin {
 				String message = arg_object.getString("action");
 				this.setBluetooth(message, callbackContext);
 				return true;
+			} else if (action.equals("getVolume") {
+				
 			} else {
 				Log.d(LOG_TAG, "invalid action");
 				callbackContext.error("invalid action");
@@ -40,6 +42,13 @@ public class Settings extends CordovaPlugin {
             return false;
 		}
     }
+	
+	private void getBluetooth(CallbackContext callbackContext) {
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		boolean result = bluetoothAdapter.isEnabled();
+		Log.d(LOG_TAG, "Bluetooth enabled: " + result);
+		callbackContext.success(Boolean.toString(result));
+	}
 
     private void setBluetooth(String action, CallbackContext callbackContext) {
         Log.d(LOG_TAG, "Execute setBluetooth");
@@ -60,11 +69,13 @@ public class Settings extends CordovaPlugin {
         }
     }
 	
-	private void getBluetooth(CallbackContext callbackContext) {
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		boolean result = bluetoothAdapter.isEnabled();
-		Log.d(LOG_TAG, "Bluetooth enabled: " + result);
-		callbackContext.success(Boolean.toString(result));
+	
+	
+	private void getVolume(CallbackContext callbackContext) {
+		AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+		int currentVolume = audio.getStreamVolume(AudioManager.STREAM_RING);
+		Log.d(LOG_TAG, "Bluetooth enabled: " + currentVolume);
+		callbackContext.success(Integer.toString(currentVolume));
 	}
 	
 }
