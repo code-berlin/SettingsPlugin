@@ -54,7 +54,7 @@ public class Settings extends CordovaPlugin {
 		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		boolean result = bluetoothAdapter.isEnabled();
 		Log.d(LOG_TAG, "Bluetooth enabled: " + result);
-		callbackContext.success(result.toString());
+		callbackContext.success(Boolean.toString(result));
 	}
 	
 }
