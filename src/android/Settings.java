@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import android.net.wifi.WifiManager;
 import android.bluetooth.BluetoothAdapter;
-import android.os.Looper;
 import android.util.Log;
 
 /**
@@ -31,6 +30,9 @@ public class Settings extends CordovaPlugin {
 				String message = arg_object.getString("action");
 				this.setBluetooth(message, callbackContext);
 				return true;
+			} else {
+				Log.d(LOG_TAG, "invalid action");
+				callbackContext.error("invalid action");
 			}
 			return false;
 		} catch(Exception e) {
@@ -49,7 +51,6 @@ public class Settings extends CordovaPlugin {
     }
 	
 	private void getBluetooth(CallbackContext callbackContext) {
-		Looper.prepare();
 		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		boolean result = bluetoothAdapter.isEnabled();
 		Log.d(LOG_TAG, "Bluetooth enabled: " + result);
