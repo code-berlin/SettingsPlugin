@@ -44,11 +44,11 @@ public class Settings extends CordovaPlugin {
     private void setBluetooth(String action, CallbackContext callbackContext) {
         Log.d(LOG_TAG, "Execute setBluetooth");
 		if (action != null && action.length() > 0) {
-           if (action.equals("activate") {
+           if (action.equals("activate")) {
 				BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 				mBluetoothAdapter.disable();
 				callbackContext.success("enabled");
-		   } else if (action.equals("deactivate") {
+		   } else if (action.equals("deactivate")) {
 				BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 				mBluetoothAdapter.disable();
 				callbackContext.success("disabled");
