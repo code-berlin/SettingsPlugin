@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.net.wifi.WifiManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
