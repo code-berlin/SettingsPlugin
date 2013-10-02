@@ -46,7 +46,7 @@ public class Settings extends CordovaPlugin {
 		if (action != null && action.length() > 0) {
            if (action.equals("activate")) {
 				BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-				mBluetoothAdapter.disable();
+				mBluetoothAdapter.enable();
 				callbackContext.success("enabled");
 		   } else if (action.equals("deactivate")) {
 				BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
