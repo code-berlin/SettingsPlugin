@@ -18,17 +18,14 @@ public class Settings extends CordovaPlugin {
 	
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        System.err.println("SETTINGS PLUGIN Execution");
 		try {
 			if (action.equals("getBluetooth")) {
 				String message = args.getString(0);
-				System.err.println("SETTINGS PLUGIN Execution getBluetooth");
 				this.getBluetooth(message, callbackContext);
 				return true;
 			}
 			return false;
 		} catch(Exception e) {
-			System.err.println("SETTINGS PLUGIN Exception: " + e.getMessage());
             callbackContext.error(e.getMessage());
             return false;
 		}

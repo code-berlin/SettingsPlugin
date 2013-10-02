@@ -5,7 +5,7 @@ var settings = {
 			errorCallback,
 			'Settings',
 			'getBluetooth',
-			params);
+			[params]);
 	}
 	
 }
