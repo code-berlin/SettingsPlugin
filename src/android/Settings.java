@@ -14,7 +14,7 @@ import android.util.Log;
  */
 public class Settings extends CordovaPlugin {
 
-	
+	private static final String LOG_TAG = "Settings Plugin";
 	
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -32,7 +32,7 @@ public class Settings extends CordovaPlugin {
     }
 
     private void getBluetooth(String message, CallbackContext callbackContext) {
-        
+        Log.d(LOG_TAG, "Exicute getBluetooth");
 		if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {
