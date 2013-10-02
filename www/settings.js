@@ -1,6 +1,6 @@
 var settings = {
 
-	getBluetooth: function(successCallback, errorCallback, param) {
+	getBluetooth: function(successCallback, errorCallback, params) {
 		return cordova.exec(successCallback,
 			errorCallback,
 			'Settings',
