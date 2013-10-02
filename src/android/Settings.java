@@ -14,27 +14,28 @@ import android.util.Log;
  */
 public class Settings extends CordovaPlugin {
 
-	private static final String LOG_TAG = "Diagnostic";
-
+	
+	
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        Log.d(LOG_TAG, "Executing Settings Plugin");
+        System.err.println("SETTINGS PLUGIN Execution");
 		try {
 			if (action.equals("getBluetooth")) {
 				String message = args.getString(0);
+				System.err.println("SETTINGS PLUGIN Execution getBluetooth");
 				this.getBluetooth(message, callbackContext);
 				return true;
 			}
 			return false;
 		} catch(Exception e) {
-			System.err.println("Exception: " + e.getMessage());
+			System.err.println("SETTINGS PLUGIN Exception: " + e.getMessage());
             callbackContext.error(e.getMessage());
             return false;
 		}
     }
 
     private void getBluetooth(String message, CallbackContext callbackContext) {
-        Log.d(LOG_TAG, "Executing Settings Plugin: getBluetooth");
+        
 		if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {
