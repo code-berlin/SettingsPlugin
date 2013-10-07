@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.net.wifi.WifiManager;
 import android.bluetooth.BluetoothAdapter;
 import android.util.Log;
+import android.provider.Settings;
 
 /**
  * This class echoes a string called from JavaScript.
