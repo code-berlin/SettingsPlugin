@@ -11,8 +11,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.net.wifi.WifiManager;
 import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
-import android.media.AudioManager; 
 import android.util.Log;
 
 /**
@@ -34,10 +32,14 @@ public class Settings extends CordovaPlugin {
 				String message = arg_object.getString("action");
 				this.setBluetooth(message, callbackContext);
 				return true;
-			} else if (action.equals("getVolume")) {
+			} else if (action.equals("getAutoRotate")) {
 				String message = arg_object.getString("action");
-				this.getVolume(callbackContext);
+				this.getAutoRotate(callbackContext);
 				return true;
+			} else if (action.equals("getAutoRotate")) {
+				String message = arg_object.getString("action");
+				this.setAutoRotate(message, callbackContext);
+				return true;			
 			} else {
 				Log.d(LOG_TAG, "invalid action");
 				callbackContext.error("invalid action");
@@ -75,15 +77,32 @@ public class Settings extends CordovaPlugin {
         }
     }
 	
-	
-	
-	private void getVolume(CallbackContext callbackContext) {
-		Log.d(LOG_TAG, "Execute getVolume");
-		AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-		int currentVolume = audio.getStreamVolume(AudioManager.STREAM_RING);
-		Log.d(LOG_TAG, "Bluetooth enabled: " + currentVolume);
-		callbackContext.success(Integer.toString(currentVolume));
+	private void getAutoRotate(CallbackContext callbackContext) {
+		//BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		//boolean result = bluetoothAdapter.isEnabled();
+		Log.d(LOG_TAG, "Auto Rotate enabled: " + result);
+		callbackContext.success(Boolean.toString(result));
 	}
+
+    private void setAutoRotate(String action, CallbackContext callbackContext) {
+        Log.d(LOG_TAG, "Execute setAutoRotate");
+		if (action != null && action.length() > 0) {
+           if (action.equals("activate")) {
+				//BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+				//mBluetoothAdapter.enable();
+				callbackContext.success("enabled");
+		   } else if (action.equals("deactivate")) {
+				//BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+				//mBluetoothAdapter.disable();
+				callbackContext.success("disabled");
+		   } else {
+				callbackContext.error("Expected true / false string argument.");
+		   }
+        } else {
+            callbackContext.error("Expected one non-empty string argument.");
+        }
+    }
+
 	
 }
 

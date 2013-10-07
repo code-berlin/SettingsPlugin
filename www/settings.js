@@ -14,11 +14,18 @@ var settings = {
 			'setBluetooth',
 			params);
 	},
-	getVolume: function(successCallback, errorCallback, params) {
+	getAutoRotate: function(successCallback, errorCallback, params) {
 		return cordova.exec(successCallback,
 			errorCallback,
 			'Settings',
-			'getVolume',
+			'getAutoRotate',
+			params);
+	},
+	setAutoRotate: function(successCallback, errorCallback, params) {
+		return cordova.exec(successCallback,
+			errorCallback,
+			'Settings',
+			'setAutoRotate',
 			params);
 	}
 	
