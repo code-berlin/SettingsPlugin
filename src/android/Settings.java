@@ -78,8 +78,8 @@ public class Settings extends CordovaPlugin {
     }
 	
 	private void getAutoRotate(CallbackContext callbackContext) {
-		Context context = cordova.getContext();
-		boolean isEnabled = Settings.System.getInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
+		Activity activity = this.cordova.getActivity();
+		boolean isEnabled = Settings.System.getInt(activity.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
 		Log.d(LOG_TAG, "Auto Rotate enabled: " + result);
 		callbackContext.success(Boolean.toString(result));
 	}
@@ -88,12 +88,12 @@ public class Settings extends CordovaPlugin {
         Log.d(LOG_TAG, "Execute setAutoRotate");
 		if (action != null && action.length() > 0) {
            if (action.equals("activate")) {
-				Context context = cordova.getContext();
-				Settings.System.putInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 1);			
+				Activity activity = this.cordova.getActivity();
+				Settings.System.putInt(activity.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 1);			
 				callbackContext.success("enabled");
 		   } else if (action.equals("deactivate")) {
-				Context context = cordova.getContext();
-				Settings.System.putInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
+				Activity activity = this.cordova.getActivity();
+				Settings.System.putInt(activity.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
 				callbackContext.success("disabled");
 		   } else {
 				callbackContext.error("Expected true / false string argument.");
