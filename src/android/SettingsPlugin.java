@@ -37,7 +37,7 @@ public class SettingsPlugin extends CordovaPlugin {
 				String message = arg_object.getString("action");
 				this.getAutoRotate(callbackContext);
 				return true;
-			} else if (action.equals("getAutoRotate")) {
+			} else if (action.equals("setAutoRotate")) {
 				String message = arg_object.getString("action");
 				this.setAutoRotate(message, callbackContext);
 				return true;			
