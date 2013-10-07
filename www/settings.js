@@ -27,6 +27,13 @@ var settingsPlugin = {
 			'SettingsPlugin',
 			'setAutoRotate',
 			params);
+	},
+	setBrightness: function(successCallback, errorCallback, params) {
+		return cordova.exec(successCallback,
+			errorCallback,
+			'SettingsPlugin',
+			'setBrightness',
+			params);
 	}
 	
 }

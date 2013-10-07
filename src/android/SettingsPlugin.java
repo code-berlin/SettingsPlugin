@@ -41,7 +41,11 @@ public class SettingsPlugin extends CordovaPlugin {
 				String message = arg_object.getString("action");
 				this.setAutoRotate(message, callbackContext);
 				return true;			
-			} else {
+			} else if (action.equals("setBrightness")) {
+				String message = arg_object.getString("action");
+				this.setBrightness(message, callbackContext);
+				return true;			
+			}else {
 				Log.d(LOG_TAG, "invalid action");
 				callbackContext.error("invalid action");
 			}
@@ -51,6 +55,9 @@ public class SettingsPlugin extends CordovaPlugin {
             return false;
 		}
     }
+	
+	
+	
 	
 	private void getBluetooth(CallbackContext callbackContext) {
 		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -77,6 +84,27 @@ public class SettingsPlugin extends CordovaPlugin {
             callbackContext.error("Expected one non-empty string argument.");
         }
     }
+	
+	private void setBrightness(String action, CallbackContext callbackContext) {
+		Log.d(LOG_TAG, "Execute setBrightness");
+		if (action != null && action.length() > 0) {
+           if (action.equals("activate")) {
+				WindowManager.LayoutParams layout = getWindow().getAttributes();
+				layout.screenBrightness = 1F;
+				getWindow().setAttributes(layout);				
+				callbackContext.success("enabled");
+		   } else if (action.equals("deactivate")) {
+				WindowManager.LayoutParams layout = getWindow().getAttributes();
+				layout.screenBrightness = 0.2F;
+				getWindow().setAttributes(layout);	
+				callbackContext.success("disabled");
+		   } else {
+				callbackContext.error("Expected true / false string argument.");
+		   }
+        } else {
+            callbackContext.error("Expected one non-empty string argument.");
+        }	
+	}
 	
 	
 	private void getAutoRotate(CallbackContext callbackContext) {
@@ -105,6 +133,8 @@ public class SettingsPlugin extends CordovaPlugin {
         }
     }
 	
+	
+	private void 
 
 	
 }
