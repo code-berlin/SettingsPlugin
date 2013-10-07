@@ -78,7 +78,7 @@ public class Settings extends CordovaPlugin {
     }
 	
 	private void getAutoRotate(CallbackContext callbackContext) {
-		context context = cordova.getContext();
+		Context context = cordova.getContext();
 		boolean isEnabled = Settings.System.getInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
 		Log.d(LOG_TAG, "Auto Rotate enabled: " + result);
 		callbackContext.success(Boolean.toString(result));
