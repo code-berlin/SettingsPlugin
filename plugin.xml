@@ -3,7 +3,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
            id="com.codeb.cordova.plugins.settings"
       version="0.1.0">
-    <name>Settings</name>
+    <name>SettingsPlugin</name>
     <description>Get / Set Settings via Cordova</description>
     <license>MIT</license>
     <keywords>phonegap,cordova,settings</keywords>
@@ -16,12 +16,12 @@
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="Settings">
-				<param name="android-package" value="com.codeb.cordova.plugins.settings.Settings" />
+            <feature name="Settingsplugin">
+				<param name="android-package" value="com.codeb.cordova.plugins.settings.Settingsplugin" />
 			</feature>
         </config-file>
  
-        <source-file src="src/android/Settings.java" target-dir="src/com/codeb/cordova/plugins/settings" />      
+        <source-file src="src/android/SettingsPlugin.java" target-dir="src/com/codeb/cordova/plugins/settings" />      
 		
 		<config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.BLUETOOTH" />

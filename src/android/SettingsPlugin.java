@@ -1,4 +1,4 @@
-package com.codeb.cordova.plugins.settings;
+package com.codeb.cordova.plugins.settingsplugin;
  
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -16,7 +16,7 @@ import android.util.Log;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class Settings extends CordovaPlugin {
+public class SettingsPlugin extends CordovaPlugin {
 
 	private static final String LOG_TAG = "Settings Plugin";
 	
@@ -34,11 +34,11 @@ public class Settings extends CordovaPlugin {
 				return true;
 			} else if (action.equals("getAutoRotate")) {
 				String message = arg_object.getString("action");
-				this.getAutoRotate(callbackContext);
+				//this.getAutoRotate(callbackContext);
 				return true;
 			} else if (action.equals("getAutoRotate")) {
 				String message = arg_object.getString("action");
-				this.setAutoRotate(message, callbackContext);
+				//this.setAutoRotate(message, callbackContext);
 				return true;			
 			} else {
 				Log.d(LOG_TAG, "invalid action");
@@ -77,9 +77,10 @@ public class Settings extends CordovaPlugin {
         }
     }
 	
+	/*
 	private void getAutoRotate(CallbackContext callbackContext) {
 		Activity activity = this.cordova.getActivity();
-		boolean isEnabled = Settings.System.getInt(activity .getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
+		boolean result = Settings.System.getInt(activity.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
 		Log.d(LOG_TAG, "Auto Rotate enabled: " + result);
 		callbackContext.success(Boolean.toString(result));
 	}
@@ -102,6 +103,8 @@ public class Settings extends CordovaPlugin {
             callbackContext.error("Expected one non-empty string argument.");
         }
     }
+	
+	*/
 
 	
 }

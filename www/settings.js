@@ -3,28 +3,28 @@ var settings = {
 	getBluetooth: function(successCallback, errorCallback, params) {
 		return cordova.exec(successCallback,
 			errorCallback,
-			'Settings',
+			'SettingsPlugin',
 			'getBluetooth',
 			params);
 	},
 	setBluetooth: function(successCallback, errorCallback, params) {
 		return cordova.exec(successCallback,
 			errorCallback,
-			'Settings',
+			'SettingsPlugin',
 			'setBluetooth',
 			params);
 	},
 	getAutoRotate: function(successCallback, errorCallback, params) {
 		return cordova.exec(successCallback,
 			errorCallback,
-			'Settings',
+			'SettingsPlugin',
 			'getAutoRotate',
 			params);
 	},
 	setAutoRotate: function(successCallback, errorCallback, params) {
 		return cordova.exec(successCallback,
 			errorCallback,
-			'Settings',
+			'SettingsPlugin',
 			'setAutoRotate',
 			params);
 	}
