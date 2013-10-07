@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.net.wifi.WifiManager;
 import android.bluetooth.BluetoothAdapter;
 import android.util.Log;
-import android.provider.Settings;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -79,7 +78,7 @@ public class Settings extends CordovaPlugin {
     }
 	
 	private void getAutoRotate(CallbackContext callbackContext) {
-		boolean isEnabled = Settings.System.getInt(paramContext.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
+		boolean isEnabled = Settings.System.getInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
 		Log.d(LOG_TAG, "Auto Rotate enabled: " + result);
 		callbackContext.success(Boolean.toString(result));
 	}
@@ -88,10 +87,10 @@ public class Settings extends CordovaPlugin {
         Log.d(LOG_TAG, "Execute setAutoRotate");
 		if (action != null && action.length() > 0) {
            if (action.equals("activate")) {
-				Settings.System.putInt(resolver, Settings.System.ACCELEROMETER_ROTATION, 1);			
+				Settings.System.putInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 1);			
 				callbackContext.success("enabled");
 		   } else if (action.equals("deactivate")) {
-				Settings.System.putInt(resolver, Settings.System.ACCELEROMETER_ROTATION, 0);
+				Settings.System.putInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
 				callbackContext.success("disabled");
 		   } else {
 				callbackContext.error("Expected true / false string argument.");
