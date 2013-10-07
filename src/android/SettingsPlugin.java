@@ -132,9 +132,6 @@ public class SettingsPlugin extends CordovaPlugin {
             callbackContext.error("Expected one non-empty string argument.");
         }
     }
-	
-	
-	private void 
 
 	
 }
