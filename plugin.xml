@@ -9,8 +9,8 @@
     <keywords>phonegap,cordova,settings</keywords>
  
  
-    <js-module src="www/settings.js" name="Settings">
-        <clobbers target="window.settings" />
+    <js-module src="www/settings.js" name="SettingsPlugin">
+        <clobbers target="window.settingsPlugin" />
     </js-module>
  
     <!-- android -->
@@ -21,7 +21,7 @@
 			</feature>
         </config-file>
  
-        <source-file src="src/android/SettingsPlugin.java" target-dir="src/com/codeb/cordova/plugins/settings" />      
+        <source-file src="src/android/SettingsPlugin.java" target-dir="src/com/codeb/cordova/plugins/settingsplugin" />      
 		
 		<config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.BLUETOOTH" />

@@ -1,4 +1,4 @@
-var settings = {
+var settingsPlugin = {
 
 	getBluetooth: function(successCallback, errorCallback, params) {
 		return cordova.exec(successCallback,
@@ -30,7 +30,7 @@ var settings = {
 	}
 	
 }
-module.exports = settings;
+module.exports = settingsPlugin;
 
 
 
