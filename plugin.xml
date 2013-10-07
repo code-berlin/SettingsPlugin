@@ -17,7 +17,7 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="SettingsPlugin">
-				<param name="android-package" value="com.codeb.cordova.plugins.settings.settingsplugin" />
+				<param name="android-package" value="com.codeb.cordova.plugins.settingsplugin" />
 			</feature>
         </config-file>
  
