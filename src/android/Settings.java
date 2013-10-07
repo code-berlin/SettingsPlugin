@@ -88,11 +88,11 @@ public class Settings extends CordovaPlugin {
         Log.d(LOG_TAG, "Execute setAutoRotate");
 		if (action != null && action.length() > 0) {
            if (action.equals("activate")) {
-				context context = cordova.getContext();
+				Context context = cordova.getContext();
 				Settings.System.putInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 1);			
 				callbackContext.success("enabled");
 		   } else if (action.equals("deactivate")) {
-				context context = cordova.getContext();
+				Context context = cordova.getContext();
 				Settings.System.putInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
 				callbackContext.success("disabled");
 		   } else {
