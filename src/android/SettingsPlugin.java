@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.net.wifi.WifiManager;
 import android.bluetooth.BluetoothAdapter;
 import android.util.Log;
+import android.view.WindowManager;
+import android.view.Window;
 import android.provider.Settings;
 
 /**
@@ -26,7 +28,7 @@ public class SettingsPlugin extends CordovaPlugin {
 		try {
 			JSONObject arg_object = args.getJSONObject(0);
 			if (action.equals("getBluetooth")) {
-				String message = arg_object.getString("action");
+				//String message = arg_object.getString("action");
 				this.getBluetooth(callbackContext);
 				return true;
 			} else if (action.equals("setBluetooth")) {
@@ -34,7 +36,7 @@ public class SettingsPlugin extends CordovaPlugin {
 				this.setBluetooth(message, callbackContext);
 				return true;
 			} else if (action.equals("getAutoRotate")) {
-				String message = arg_object.getString("action");
+				//String message = arg_object.getString("action");
 				this.getAutoRotate(callbackContext);
 				return true;
 			} else if (action.equals("setAutoRotate")) {
@@ -88,16 +90,47 @@ public class SettingsPlugin extends CordovaPlugin {
 	private void setBrightness(String action, CallbackContext callbackContext) {
 		Log.d(LOG_TAG, "Execute setBrightness");
 		if (action != null && action.length() > 0) {
-           if (action.equals("activate")) {
-				WindowManager.LayoutParams layout = getWindow().getAttributes();
-				layout.screenBrightness = 1F;
-				getWindow().setAttributes(layout);				
-				callbackContext.success("enabled");
+		   if (action.equals("activate")) {
+			   float brightness = 1F;
+			   int brightnessInt = (int)(brightness*255);
+			   
+			   Activity activity = this.cordova.getActivity();
+			   Settings.System.putInt(activity.getContentResolver(),
+					   Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+					   Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessInt);
+			   
+			   cordova.getActivity().runOnUiThread(new Runnable() {
+		            public void run() {		            	
+		            	float brightness = 1F;
+		            	Activity activity = cordova.getActivity();
+		            	activity.getWindow().getAttributes();
+		            	WindowManager.LayoutParams layout = activity.getWindow().getAttributes();
+		 				layout.screenBrightness = brightness;
+		 				activity.getWindow().setAttributes(layout);				
+		            }
+		        }); 
+			   callbackContext.success("enabled");
+				
 		   } else if (action.equals("deactivate")) {
-				WindowManager.LayoutParams layout = getWindow().getAttributes();
-				layout.screenBrightness = 0.2F;
-				getWindow().setAttributes(layout);	
-				callbackContext.success("disabled");
+			   float brightness = 0.2F;
+			   int brightnessInt = (int)(brightness*255);
+			   
+			   Activity activity = this.cordova.getActivity();
+			   Settings.System.putInt(activity.getContentResolver(),
+					   Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+					   Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessInt);
+			   
+			   cordova.getActivity().runOnUiThread(new Runnable() {
+		            public void run() {
+		            	float brightness = 0.2F;		            	
+		            	Activity activity = cordova.getActivity();
+		            	activity.getWindow().getAttributes();
+		            	WindowManager.LayoutParams layout = activity.getWindow().getAttributes();
+		 				layout.screenBrightness = brightness;
+		 				activity.getWindow().setAttributes(layout);				
+		            }
+		        }); 
+			   callbackContext.success("disabled"); 
 		   } else {
 				callbackContext.error("Expected true / false string argument.");
 		   }
