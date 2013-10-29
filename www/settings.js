@@ -34,6 +34,13 @@ var settingsPlugin = {
 			'SettingsPlugin',
 			'setBrightness',
 			params);
+	},
+	getBrightness: function(successCallback, errorCallback, params) {
+		return cordova.exec(successCallback,
+			errorCallback,
+			'SettingsPlugin',
+			'getBrightness',
+			params);
 	}
 	
 }
