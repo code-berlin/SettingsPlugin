@@ -8,12 +8,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.net.wifi.WifiManager;
+//import android.os.Bundle;
+//import android.net.wifi.WifiManager;
 import android.bluetooth.BluetoothAdapter;
 import android.util.Log;
 import android.view.WindowManager;
-import android.view.Window;
+//import android.view.Window;
 import android.provider.Settings;
 
 /**
@@ -25,31 +25,25 @@ public class SettingsPlugin extends CordovaPlugin {
 	
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		try {
-			JSONObject arg_object = args.getJSONObject(0);
+    	Log.d(LOG_TAG, "execute");
+    	try {
 			if (action.equals("getBluetooth")) {
-				//String message = arg_object.getString("action");
-				this.getBluetooth(callbackContext);
+				this.getBluetooth(callbackContext, args);
 				return true;
 			} else if (action.equals("setBluetooth")) {
-				String message = arg_object.getString("action");
-				this.setBluetooth(message, callbackContext);
+				this.setBluetooth(action, callbackContext, args);
 				return true;
 			} else if (action.equals("getAutoRotate")) {
-				//String message = arg_object.getString("action");
-				this.getAutoRotate(callbackContext);
+				this.getAutoRotate(callbackContext, args);
 				return true;
 			} else if (action.equals("setAutoRotate")) {
-				String message = arg_object.getString("action");
-				this.setAutoRotate(message, callbackContext);
+				this.setAutoRotate(action, callbackContext, args);
 				return true;			
 			} else if (action.equals("setBrightness")) {
-				String message = arg_object.getString("action");
-				this.setBrightness(message, callbackContext);
+				this.setBrightness(action, callbackContext, args);
 				return true;			
 			}  else if (action.equals("getBrightness")) {
-				String message = arg_object.getString("action");
-				this.getBrightness(message, callbackContext);
+				this.getBrightness(action, callbackContext, args);
 				return true;			
 			} else {
 				Log.d(LOG_TAG, "invalid action");
@@ -57,7 +51,8 @@ public class SettingsPlugin extends CordovaPlugin {
 			}
 			return false;
 		} catch(Exception e) {
-            callbackContext.error(e.getMessage());
+			Log.d(LOG_TAG, e.toString());
+			callbackContext.error(e.getMessage());
             return false;
 		}
     }
@@ -65,24 +60,42 @@ public class SettingsPlugin extends CordovaPlugin {
 	
 	
 	
-	private void getBluetooth(CallbackContext callbackContext) {
+	private void getBluetooth(CallbackContext callbackContext, JSONArray args) {
 		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		boolean result = bluetoothAdapter.isEnabled();
-		Log.d(LOG_TAG, "Bluetooth enabled: " + result);
-		callbackContext.success(Boolean.toString(result));
+		Log.d(LOG_TAG, "Bluetooth enabled: " + result);	
+		String cb = "";
+		try {
+			JSONObject arg_object = args.getJSONObject(0);
+			cb = arg_object.getString("cb");
+		} catch (Exception e) {	
+			Log.d(LOG_TAG, e.toString());
+			Log.d(LOG_TAG, args.toString());
+		}			
+		callbackContext.success("{\"result\":\"" + Boolean.toString(result) + "\",\"component\":\"blueetooth\",\"cb\":\""+ cb + "\"}");
 	}
 
-    private void setBluetooth(String action, CallbackContext callbackContext) {
+    private void setBluetooth(String action, CallbackContext callbackContext, JSONArray args) {
         Log.d(LOG_TAG, "Execute setBluetooth");
-		if (action != null && action.length() > 0) {
-           if (action.equals("activate")) {
+        String cb = "";
+		String val = "";
+		if (action != null && action.length() > 0) {	
+			try {
+				JSONObject arg_object = args.getJSONObject(0);
+				cb = arg_object.getString("cb");
+				val = arg_object.getString("value");
+			} catch (Exception e) {
+				Log.d(LOG_TAG, e.toString());
+				Log.d(LOG_TAG, args.toString());
+			}
+			if (val.equals("1")) {
 				BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 				mBluetoothAdapter.enable();
-				callbackContext.success("enabled");
-		   } else if (action.equals("deactivate")) {
+				callbackContext.success("{\"result\":\"1\",\"component\":\"blueetooth\",\"cb\":\""+ cb + "\"}");
+		   } else if (val.equals("0")) {
 				BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 				mBluetoothAdapter.disable();
-				callbackContext.success("disabled");
+				callbackContext.success("{\"result\":\"0\",\"component\":\"blueetooth\",\"cb\":\""+ cb + "\"}");
 		   } else {
 				callbackContext.error("Expected true / false string argument.");
 		   }
@@ -91,10 +104,20 @@ public class SettingsPlugin extends CordovaPlugin {
         }
     }
 	
-	private void setBrightness(String action, CallbackContext callbackContext) {
+	private void setBrightness(String action, CallbackContext callbackContext, JSONArray args) {
 		Log.d(LOG_TAG, "Execute setBrightness");
-		if (action != null && action.length() > 0) {
-		   if (action.equals("activate")) {
+		String cb = "";
+		String val = "";
+		if (action != null && action.length() > 0) {	
+			try {
+				JSONObject arg_object = args.getJSONObject(0);
+				cb = arg_object.getString("cb");
+				val = arg_object.getString("value");
+			} catch (Exception e) {
+				Log.d(LOG_TAG, e.toString());
+				Log.d(LOG_TAG, args.toString());
+			}
+			if (val.equals("1")) {
 			   float brightness = 1F;
 			   int brightnessInt = (int)(brightness*255);
 
@@ -113,12 +136,11 @@ public class SettingsPlugin extends CordovaPlugin {
 		 				activity.getWindow().setAttributes(layout);				
 		            }
 		        }); 
-			   callbackContext.success("enabled");
+			   callbackContext.success("{\"result\":\"1\",\"component\":\"brightness\",\"cb\":\""+ cb + "\"}");
 				
-		   } else if (action.equals("deactivate")) {
+		   } else if (val.equals("0")) {
 			   float brightness = 0.2F;
-			   int brightnessInt = (int)(brightness*255);
-			   
+			   int brightnessInt = (int)(brightness*255);			   
 			   Activity activity = this.cordova.getActivity();
 			   Settings.System.putInt(activity.getContentResolver(),
 					   Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
@@ -134,7 +156,7 @@ public class SettingsPlugin extends CordovaPlugin {
 		 				activity.getWindow().setAttributes(layout);				
 		            }
 		        }); 
-			   callbackContext.success("disabled"); 
+			   callbackContext.success("{\"result\":\"0\",\"component\":\"brightness\",\"cb\":\""+ cb + "\"}"); 
 		   } else {
 				callbackContext.error("Expected true / false string argument.");
 		   }
@@ -143,13 +165,22 @@ public class SettingsPlugin extends CordovaPlugin {
         }	
 	}
 	
-	private void getBrightness(String action, CallbackContext callbackContext) {
+	private void getBrightness(String action, CallbackContext callbackContext, JSONArray args) {
         Log.d(LOG_TAG, "Execute getBrightness");
 		if (action != null && action.length() > 0) {
+			String cb = "";
+			try {
+				JSONObject arg_object = args.getJSONObject(0);
+				cb = arg_object.getString("cb");
+			} catch (Exception e) {	
+				Log.d(LOG_TAG, e.toString());
+				Log.d(LOG_TAG, args.toString());
+			}
 			Activity activity = this.cordova.getActivity();
 			try {
 				int brightness = Settings.System.getInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
 				Log.e(LOG_TAG, Integer.toString(brightness));
+				callbackContext.success("{\"result\":\"" + Integer.toString(brightness) + "\",\"component\":\"brightness\",\"cb\":\""+ cb + "\"}"); 
 			} catch (Settings.SettingNotFoundException e) {
 		        Log.e(LOG_TAG, e.toString());
 		    }
@@ -158,24 +189,42 @@ public class SettingsPlugin extends CordovaPlugin {
         }
     }
 	
-	private void getAutoRotate(CallbackContext callbackContext) {
+	private void getAutoRotate(CallbackContext callbackContext, JSONArray args) {
 		Activity activity = this.cordova.getActivity();
 		boolean result = Settings.System.getInt(activity.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
 		Log.d(LOG_TAG, "Auto Rotate enabled: " + result);
-		callbackContext.success(Boolean.toString(result));
+		String cb = "";
+		try {
+			JSONObject arg_object = args.getJSONObject(0);
+			cb = arg_object.getString("cb");
+		} catch (Exception e) {	
+			Log.d(LOG_TAG, e.toString());
+			Log.d(LOG_TAG, args.toString());
+		}
+		callbackContext.success("{\"result\":\"" + Boolean.toString(result) + "\",\"component\":\"autoRotate\",\"cb\":\""+ cb + "\"}");
 	}
 
-    private void setAutoRotate(String action, CallbackContext callbackContext) {
+    private void setAutoRotate(String action, CallbackContext callbackContext, JSONArray args) {
         Log.d(LOG_TAG, "Execute setAutoRotate");
-		if (action != null && action.length() > 0) {
-           if (action.equals("activate")) {
+        String cb = "";
+		String val = "";
+        if (action != null && action.length() > 0) {
+        	try {
+        		JSONObject arg_object = args.getJSONObject(0);
+				cb = arg_object.getString("cb");
+				val = arg_object.getString("value");
+    		} catch (Exception e) {			
+    			Log.d(LOG_TAG, e.toString());
+    			Log.d(LOG_TAG, args.toString());
+    		}
+        	if (val.equals("1")) {
 				Activity activity = this.cordova.getActivity();
 				Settings.System.putInt(activity.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 1);			
-				callbackContext.success("enabled");
-		   } else if (action.equals("deactivate")) {
+				callbackContext.success("{\"result\":\"1\",\"component\":\"autoRotate\",\"cb\":\""+ cb + "\"}");
+		   } else if (val.equals("0")) {
 				Activity activity = this.cordova.getActivity();
 				Settings.System.putInt(activity.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
-				callbackContext.success("disabled");
+				callbackContext.success("{\"result\":\"0\",\"component\":\"autoRotate\",\"cb\":\""+ cb + "\"}");
 		   } else {
 				callbackContext.error("Expected true / false string argument.");
 		   }
