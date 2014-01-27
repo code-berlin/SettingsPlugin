@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=160" />
+        <title>SettingsPlugin example</title>
+        
+        <script src="cordova.js" type="text/javascript" charset="utf-8" async defer></script>
+        <script type="text/javascript">
+            // executed when cordova is loaded
+            function onDeviceReady() {
+                // listen to resume event as user might have changed something while outside the app.
+                document.addEventListener('resume', updateStatusDisplay, false);
+                updateStatusDisplay();
+            }
+
+            // update all statuses
+            function updateStatusDisplay() {
+                settingsPlugin.getBluetooth(setBluetoothStatus);
+                settingsPlugin.getAutoRotate(setAutoRotateStatus);
+                settingsPlugin.getLocationServices(setLocationServiceStatus);
+                settingsPlugin.getBrightness(function(response) {
+                    setBrightnessStatus(response);
+                    document.getElementById('brightness_range').value = response.value;
+                });
+            }
+
+            function bluetoothOn() { settingsPlugin.setBluetooth(true, setBluetoothStatus); }
+            function bluetoothOff() { settingsPlugin.setBluetooth(false, setBluetoothStatus); }
+            function setBluetoothStatus(response) { document.getElementById('bluetooth_status').innerHTML = response.value ? 'on' : 'off'; }
+
+            function autoRotateOn() { settingsPlugin.setAutoRotate(true, setAutoRotateStatus); }
+            function autoRotateOff() { settingsPlugin.setAutoRotate(false, setAutoRotateStatus); }
+            function setAutoRotateStatus(response) { document.getElementById('autoRotate_status').innerHTML = response.value ? 'on' : 'off'; }
+
+            function setLocationServices() { settingsPlugin.setLocationServices(); }
+            function setLocationServiceStatus(response) { 
+                var generalState = response.value ? 'on' : 'off',
+                    networkState = response.networkValue ? 'on' : 'off',
+                    gpsState = response.gpsValue ? 'on' : 'off';
+                document.getElementById('locationServices_status').innerHTML = generalState + ', net: ' + networkState + ', gps: ' + gpsState;
+            }
+
+            function setBrightness(value) { settingsPlugin.setBrightness(value, setBrightnessStatus); }
+            function setBrightnessStatus(response) { document.getElementById('brightness_status').innerHTML = Math.round(response.value*100) + '%'; }
+
+            document.addEventListener('deviceready', onDeviceReady, false);
+        </script>
+    </head>
+    <body>
+        <h1>SettingsPlugin example</h1>
+        <label for="bluetooth_on"></label>
+        <div>Bluetooth (<span id="bluetooth_status">?</span>): <button type="button" id="bluetooth_on" onclick="bluetoothOn()">ON</button><button type="button" id="bluetooth_off" onclick="bluetoothOff()">OFF</button></div>
+        <div>Auto-rotate (<span id="autoRotate_status">?</span>): <button type="button" id="autoRotate_on" onclick="autoRotateOn()">ON</button><button type="button" id="autoRotate_off" onclick="autoRotateOff()">OFF</button></div>
+        <div>Location services (<span id="locationServices_status">?</span>): <button type="button" id="locationServices_on" onclick="setLocationServices()">SET</button>
+        <br>
+        <div>Brightness (<span id="brightness_status">?</span>):</div>
+        <div><input type="range" id="brightness_range" name="points" min="0.1" max="1.0" step="0.1" onChange="setBrightness(this.value)" style="width:100%"></div>
+    </body>
+</html>
