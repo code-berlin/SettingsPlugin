@@ -4,12 +4,12 @@ This is a cordova plugin that can change device settings from inside the app dur
 
 It currently supports Android devices only.
 
-##Features:
+###Features:
  - Change brightness of the device
  - Turn Bluetooth on/off
  - Turn auto-rotate on/off (allow app rotation or stay in portrait)
 
-##Version
+###Version
 
 0.1
 
@@ -31,7 +31,7 @@ Every getter function accepts a neccesary success callback function and an optio
 
 The success functions get's an argument holding the response of the request. It's a JSON holding at least the components name and it's value.
 ####Response JSON object:
-```JSON
+```JavaScript
 {
     component: 'component name',
     value: anyValue
