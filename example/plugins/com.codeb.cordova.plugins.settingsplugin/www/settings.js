@@ -86,6 +86,17 @@ var settingsPlugin = {
 	setLocationServices: function()
 	{
 		cordova.exec(null, null, 'SettingsPlugin', 'setLocationServices', []);
+	},
+	/**
+	 * Helper function to check if app is in background on older Android versions.
+	 * @param {Function} successCallback - Function to be called after successful response (args: {component: 'appPaused', value: [isAppPaused]}).
+	 * @param {Function} errorCallback - Function being called if something went wrong (args: error).
+	 */
+	isAppPaused: function(successCallback, errorCallback)
+	{
+		successCallback = successCallback || null;
+		errorCallback = errorCallback || console.error;
+		cordova.exec(successCallback, errorCallback, 'SettingsPlugin', 'isAppPaused', []);
 	}
 
 };

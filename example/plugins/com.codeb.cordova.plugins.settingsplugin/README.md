@@ -105,3 +105,9 @@ getLocationServices(successCb[, errorCb])
 setLocationServices();
 ```
 > This setter function is irregular. It does not accept any arguments.
+
+###App pause state
+Helper function to check if app is in background on older Android versions.
+```JavaScript
+isAppPaused(successCb[, errorCb])
+```

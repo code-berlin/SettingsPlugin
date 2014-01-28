@@ -53,7 +53,10 @@ public class SettingsPlugin extends CordovaPlugin {
 				this.getLocationServices(callbackContext);
 				return true;
 			} else if (action.equals("setLocationServices")) {
-				this.setLocationServices(callbackContext);
+				this.setLocationServices();
+				return true;
+			} else if (action.equals("isAppPaused")) {
+				this.isAppPaused(callbackContext);
 				return true;
 			} else {
 				Log.d(TAG, "invalid action");
@@ -240,10 +243,21 @@ public class SettingsPlugin extends CordovaPlugin {
 	/**
 	 * Shows the device's location service settings.
 	 */
-	private void setLocationServices(CallbackContext callbackContext) {
+	private void setLocationServices() {
 		Log.d(TAG, "Execute setLocationService");
 
 		cordova.getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+	}
+	
+	/**
+	 * Check if app is paused.
+	 * Older versions of android have a different life-cycle that doesn't support paused apps. 
+	 * @param callbackContext
+	 */
+	private void isAppPaused(CallbackContext callbackContext) {
+		Log.d(TAG, "Execute isApplicationPaused()");
+
+		returnValue(callbackContext, "appPaused", webView.isPaused());
 	}
 	
 	//////////////////////////////////////////////
